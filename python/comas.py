@@ -1,5 +1,6 @@
 import math
 
+
 muestra = input ("ingrese numeros separados por comas: ")
 
 numeros = [float(x) for x in nuestra.split(",")]
