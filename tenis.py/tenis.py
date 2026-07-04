@@ -1,16 +1,50 @@
+
+# Aclaracion aca:
+# para el tema de las fechas de los partidos pdoes poner algo como: "datetime" o "time"
+# son librerias que podemos usar para poder hacer este tipo de cosas.
+
+from datetime import datetime, date
+from enum import Enum 
+
+# Asi es como podes usarlo:
+# # Current date and time
+# now = datetime.now()
+# print(now)  # Output: 2026-07-04 10:01:23.456789
+
+# # Current date only
+# today = date.today()
+# print(today)  # Output: 2026-07-04
+
 class Persona:
     def __init__(self):
         pass
 
-
 class Tenista(Persona):
-        def __init__(self,nombre, edad, pais, ranking, superficie_favorita):
+        def __init__(self,nombre, edad, pais, ranking, superficie_favorita, raqueta, pelota):
          super().__init__()
          self.nombre=nombre
          self.edad=edad
          self.pais=pais
          self.ranking=ranking
          self.superficie_favorita=superficie_favorita
+         self.raqueta=raqueta ## La idea es que cuando instancias aca, sea la clase "Raqueta"
+         self.pelota=pelota ## lo mismo que con Raqueta
+
+# persona = Persona(..., ...)
+# raqueta = Raqueta(...)
+# pelota = Pelota(...)
+# tenista1 = Tenista(..., ...,..., raqueta, pelota) 
+
+
+# Tip: usate un Enum, para representar profesional y amateur.
+#
+# class Types(Enum):
+#     PROFESSIONAL = Profesional(...)
+#     AMATEUR = Amateur(...)  
+# 
+# 
+# Para llamarlo haces: Types.PROFESSIONAL y sabes que representa tu clase Profesional 
+
 
 class tipos(Tenista):
     def __init__(self, nombre, edad, pais, ranking, superficie_favorita,profesional,amateur):
@@ -63,6 +97,17 @@ class Raqueta(Equipamento):
         self.balance=balance
         self.material_cuerda=material_cuerda
 
+# Podes definir los tipos de Pelota con un enum tambien:
+
+# ATP, WTA, Recreativa
+class PelotaType(Enum):
+    ATP = "ATP",
+    WTA = "WTA",
+    RECREATIVE = "Recreative"
+
+
+# Esto es para mas "chiche" podrias usar una data class, pero deberias modificar en parte como se declara
+# todo el codigo, lo que es medio fiaca
 
 class Pelota(Equipamento):
     def __init__(self,tipo,durabilidad,presion):
