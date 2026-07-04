@@ -82,7 +82,7 @@ class Superficie:
         self.velocidad=velocidad
 
 
-Superficie = input("ingrese una supeerficie:").lower ()
+Superficie = input("ingrese una superficie:").lower ()
 
 if Superficie == "pasto":
      velocidad = 15
@@ -166,4 +166,57 @@ class Partido:
         print("Ganador:", ganador.nombre)
 
 
+class Torneo:
+    def __init__(self,max_jugadores,puntos,victorias,derrotas):
+        self.max_jugadores=max_jugadores
+        self.puntos=puntos
+        self.victorias=victorias
+        self.derrotas=derrotas
+
+class GrandSlam(Torneo):
+    def __init__(self):
+        super().__init__()
+        self.puntos = 2000
+        self.max_jugadores = 128
+
+class MasterSeries(Torneo):
+    def __init__(self):
+        super().__init__()
+        self.puntos = 1000
+        self.max_jugadores = 64
+
+class TorneoChanllegerATP(Torneo):
+    def __init__(self):
+        super().__init__()
+        self.puntos = 80
+        self.max_jugadores = 32
+
+class TorneoAmateur(Torneo):
+    def __init__(self):
+        super().__init__()
+        self.puntos = 0
+        self.max_jugadores = 32
+
+def generar_reportes(self):
+    return (
+        f"Torneo: {self.nombre}\n"
+        f"Puntos: {self.puntos}\n"
+        f"Máximo de jugadores: {self.max_jugadores}"
+    )
+
+def get_estadisticas(self,total):
+    def get_estadisticas(self):
+       total = self.victorias + self.derrotas
+    win_rate = (self.victorias / total * 100) if total > 0 else 0
+
+    return (
+        f"V: {self.victorias}, "
+        f"D: {self.derrotas}, "
+        f"Win Rate: {win_rate:.2f}%, "
+        f"Puntos: {self.puntos}"
+    )
+    
+
+            
         
+
