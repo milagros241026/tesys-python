@@ -1,19 +1,6 @@
 
-# Aclaracion aca:
-# para el tema de las fechas de los partidos pdoes poner algo como: "datetime" o "time"
-# son librerias que podemos usar para poder hacer este tipo de cosas.
-
-from datetime import datetime, date
+from datetime import  date
 from enum import Enum 
-
-# Asi es como podes usarlo:
-# # Current date and time
-# now = datetime.now()
-# print(now)  # Output: 2026-07-04 10:01:23.456789
-
-# # Current date only
-# today = date.today()
-# print(today)  # Output: 2026-07-04
 
 class Persona:
     def __init__(self):
@@ -27,23 +14,53 @@ class Tenista(Persona):
          self.pais=pais
          self.ranking=ranking
          self.superficie_favorita=superficie_favorita
-         self.raqueta=raqueta ## La idea es que cuando instancias aca, sea la clase "Raqueta"
-         self.pelota=pelota ## lo mismo que con Raqueta
+         self.raqueta=raqueta
+         self.pelota=pelota 
+        
+        def __eq__(self, other):
+            if isinstance(other, Tenista):
+                return self.name == other.name and self.price == other.price
+            return False
 
-# persona = Persona(..., ...)
-# raqueta = Raqueta(...)
-# pelota = Pelota(...)
-# tenista1 = Tenista(..., ...,..., raqueta, pelota) 
+class Raqueta:
+    def __init__(self,mango,cuerdas,marca):
+        self.mango=mango
+        self.cuerdas=cuerdas
+        self.marca=marca
 
 
-# Tip: usate un Enum, para representar profesional y amateur.
-#
-# class Types(Enum):
-#     PROFESSIONAL = Profesional(...)
-#     AMATEUR = Amateur(...)  
-# 
-# 
-# Para llamarlo haces: Types.PROFESSIONAL y sabes que representa tu clase Profesional 
+class MangoTypes(Enum):
+    duro = "duro"
+    flojo = "flojo"
+
+class CuerdasTypes(Enum):
+    munifilamentos = "munifilamentos"
+    monofilamentos = "monofilamentos"
+    hibridos = "hibridos"
+
+class MarcaTypes(Enum):
+    wilson = "wilson"
+    head = "head"
+    babolat = "babolat"
+
+
+
+Raqueta1 = Raqueta(MangoTypes.duro,CuerdasTypes.hibridos,MarcaTypes.wilson)
+Tenista1 = Tenista(Raqueta1)
+        
+class Pelota:
+    def __init__(self,color,durabilidad):
+        self.color=color
+        self.durabilidad=durabilidad
+
+class PelotaType(Enum):
+    ATP = "ATP",
+    WTA = "WTA",
+    RECREATIVE = "Recreative"
+
+pelota1 = (PelotaType.ATP)
+Tenista1 = (pelota1)
+        
 
 
 class tipos(Tenista):
@@ -76,12 +93,6 @@ class Profesional(Tenista):
 
     nombre = input("ingrese el nombre del jugador")
 
-if Tenista in Profesional:
-    print("Estadísticas de", Tenista)
-    print("ganados:" , [Tenista]["ganados"])
-    print("perdidos:", [Tenista]["perdidos"])
-else:
-    print("Jugador no encontrado.")
 
 
 class Equipamento:
@@ -89,6 +100,22 @@ class Equipamento:
         pass
 
 class Raqueta(Equipamento):
+    
+   Profesional = []
+
+encontrado = False
+
+for jugador in Profesional:
+    if jugador.nombre == jugador.nombre:
+        print("Estadísticas de", jugador.nombre)
+        print("Ganados:", jugador.victorias)
+        print("Perdidos:", jugador.derrotas)
+        encontrado = True
+        break
+
+if not encontrado:
+    print("Jugador no encontrado.")
+
     def __init__(self,marca,modelo,peso,balance,material_cuerda):
         super().__init__()
         self.marca=marca
@@ -97,17 +124,7 @@ class Raqueta(Equipamento):
         self.balance=balance
         self.material_cuerda=material_cuerda
 
-# Podes definir los tipos de Pelota con un enum tambien:
 
-# ATP, WTA, Recreativa
-class PelotaType(Enum):
-    ATP = "ATP",
-    WTA = "WTA",
-    RECREATIVE = "Recreative"
-
-
-# Esto es para mas "chiche" podrias usar una data class, pero deberias modificar en parte como se declara
-# todo el codigo, lo que es medio fiaca
 
 class Pelota(Equipamento):
     def __init__(self,tipo,durabilidad,presion):
@@ -116,7 +133,10 @@ class Pelota(Equipamento):
         self.durabilidad=durabilidad
         self.presion=presion
 
-
+class PelotaType(Enum):
+    ATP = "ATP",
+    WTA = "WTA",
+    RECREATIVE = "Recreative"
 
 class Superficie:
     def __init__(self,tierra,pasto,cemento,velocidad,bote):
@@ -171,19 +191,19 @@ class Partido:
         self.jugador1=jugador1
         self.jugador2=jugador2
 
-
-        if jugador1 == jugador2:
+    def  date(self):
+     today = date.today()
+     if self.jugador1.__eq__(self.jugador2):
             raise ValueError("los jugadores deben ser diferentes")
         
-        self.partidos = []
-
+            self.partidos = []
+        
 
     def registrar_set(self,juegos_j1,juegos_j2):
         if len(self.set) >= 5:  
           print("no se pueden jugar mas de 5 sets")
           return
         
-
         self.append.sets(juegos_j1,juegos_j2)
 
         def finalizar_partido(self):
@@ -209,8 +229,7 @@ class Partido:
         perdedor.derrotas += 1
 
         print("Ganador:", ganador.nombre)
-
-
+               
 class Torneo:
     def __init__(self,max_jugadores,puntos,victorias,derrotas):
         self.max_jugadores=max_jugadores
@@ -262,6 +281,75 @@ def get_estadisticas(self,total):
     )
     
 
-            
+     
         
+import pytest
+from tenis import *
 
+def test_crear_raqueta():
+    r = Raqueta(MangoTypes.duro, CuerdasTypes.hibridos, MarcaTypes.wilson)
+
+    assert r.mango == MangoTypes.duro
+    assert r.cuerdas == CuerdasTypes.hibridos
+    assert r.marca == MarcaTypes.wilson
+
+
+def test_crear_pelota():
+    p = Pelota(PelotaType.ATP, 80)
+
+    assert p.color == PelotaType.ATP
+    assert p.durabilidad == 80
+
+
+def test_crear_tenista():
+    r = Raqueta(MangoTypes.duro, CuerdasTypes.hibridos, MarcaTypes.wilson)
+    p = Pelota(PelotaType.ATP, 80)
+
+    t = Tenista(
+        "Nadal",
+        38,
+        "España",
+        2,
+        "Tierra",
+        r,
+        p
+    )
+
+    assert t.nombre == "Nadal"
+    assert t.edad == 38
+    assert t.ranking == 2
+
+
+def test_igualdad_tenistas():
+    r = Raqueta(MangoTypes.duro, CuerdasTypes.hibridos, MarcaTypes.wilson)
+    p = Pelota(PelotaType.ATP, 80)
+
+    t1 = Tenista("Nadal",38,"España",2,"Tierra",r,p)
+    t2 = Tenista("Nadal",38,"España",2,"Tierra",r,p)
+
+    assert t1 == t2
+
+
+def test_profesional_gana():
+    jugador = Profesional("Djokovic",38,"Serbia",1,"Cemento",300,20)
+
+    jugador.ganar_partidos()
+
+    assert jugador.victorias == 1
+
+
+def test_profesional_pierde():
+    jugador = Profesional("Alcaraz",22,"España",2,"Tierra",250,10)
+
+    jugador.perder_partidos()
+
+    assert jugador.derrotas == 1
+
+
+def test_superficie():
+    superficie = "pasto"
+
+    if superficie == "pasto":
+        velocidad = 15
+
+    assert velocidad == 15
