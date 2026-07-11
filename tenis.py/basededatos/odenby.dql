@@ -1,0 +1,35 @@
+CREATE TABLE departamentos (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE empleados (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(50),
+    apellido VARCHAR(50),
+    salario NUMERIC(10,2),
+    id_departamento INTEGER REFERENCES departamentos(id),
+    fecha_ingreso DATE
+);
+
+INSERT INTO departamentos (nombre) VALUES
+    ('Sistemas'),
+    ('Ventas'),
+    ('Recursos Humanos'),
+    ('Marketing');
+
+
+SELECT COUNT(*) AS total_empleados
+FROM empleados
+GROUP BY id_departamento;
+
+SELECT AVG(salario) AS salario_promedio
+FROM empleados
+GROUP BY id_departamento
+
+SELECT MAX(salario) AS salario,
+       MIN(salario) AS salario
+FROM empleados
+GROUP BY id_departamento
+
+SELECT
