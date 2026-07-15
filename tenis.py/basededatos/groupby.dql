@@ -1,4 +1,4 @@
-CREATE TABLE departamentos (
+REATE TABLE departamentos (
     id SERIAL PRIMARY KEY,
     nombre VARCHAR(50) NOT NULL
 );
@@ -18,12 +18,11 @@ INSERT INTO departamentos (nombre) VALUES
     ('Recursos Humanos'),
     ('Marketing');
 
-
-SELECT COUNT(*) AS total_empleados
+SELECT id_departamento , COUNT (*) AS cantidad_empleados
 FROM empleados
 GROUP BY id_departamento;
 
-SELECT AVG(salario) AS salario_promedio
+SELECT id_departamento , AVG(*) AS salario_promedio
 FROM empleados
 GROUP BY id_departamento;
 
@@ -32,19 +31,17 @@ SELECT MAX(salario) AS salario,
 FROM empleados
 GROUP BY id_departamento;
 
-SELECT id_departamento,
-       COUNT(*) AS cantidad_empleados
-FROM empleados
-GROUP BY id_departamento;
-
-SELECT id_departamento
-    AVG(salario) AS salario_promedio
-GROUP BY id_departamento;
-
-SELECT id_departamento
-      AVG(salario) AS salario_promedio
+SELECT id_departamento , AVG(salario) AS promedio
 FROM empleados
 GROUP BY id_departamento
-HAVING salario > 650000;
+HAVING AVG(salario) > 650000;
+
+SELECT EXTRACT(YEAR FROM fecha_ingreso) AS año_entrada
+COUNT(*) AS contar_empleados
+FROM empleados
+GROUP BY EXTRACT(YEAR FROM fecha_ingreso)
+ORDER BY año_entrada;
+
+
 
 
