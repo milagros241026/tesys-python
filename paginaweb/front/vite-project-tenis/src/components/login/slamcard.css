@@ -1,0 +1,89 @@
+
+
+.slam-card {
+  background: var(--white);
+  border: 1px solid var(--chalk-line);
+  border-top: 6px solid var(--ink);
+  border-radius: var(--radius);
+  padding: 1.75rem;
+  box-shadow: var(--shadow);
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.slam-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 30px -14px rgba(22, 34, 27, 0.45);
+}
+
+.slam-card--roland-garros { border-top-color: var(--clay); }
+.slam-card--wimbledon      { border-top-color: var(--grass); }
+.slam-card--australian     { border-top-color: var(--hard-ao); }
+.slam-card--us-open        { border-top-color: var(--hard-us); }
+
+.slam-card__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.slam-card__name {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  text-transform: uppercase;
+  margin: 0;
+  letter-spacing: 0.02em;
+}
+
+.slam-card__country {
+  font-size: 1.3rem;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.slam-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+  margin: 0 0 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--chalk-line);
+}
+
+.slam-card__meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.slam-card__meta span:not(:last-child)::after {
+  content: '·';
+  margin-left: 0.6rem;
+  color: var(--chalk-line);
+}
+
+.slam-card__description {
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+  margin: 0;
+  line-height: 1.55;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slam-card {
+    transition: none;
+  }
+
+  .slam-card:hover {
+    transform: none;
+  }
+}
+
+
+

@@ -1,0 +1,91 @@
+/* ==========================================================================
+   Login.css — usa los mismos tokens que App.css (colores de superficie,
+   tipografías, radios). Si movés este componente a otro proyecto sin
+   App.css, copiá el bloque :root de App.css o importalo desde ahí.
+   ========================================================================== */
+
+.login {
+  max-width: 360px;
+  margin: 4rem auto;
+  padding: 2rem 2rem 1.75rem;
+  background: var(--white);
+  border: 1px solid var(--chalk-line);
+  border-top: 6px solid var(--ink);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.login__title {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  margin: 0 0 0.25rem;
+  color: var(--ink);
+}
+
+.login__input {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  padding: 0.7rem 0.9rem;
+  border: 1px solid var(--chalk-line);
+  border-radius: var(--radius);
+  background: var(--chalk);
+  color: var(--ink);
+  transition: border-color var(--transition), background var(--transition);
+}
+
+.login__input::placeholder {
+  color: var(--ink-soft);
+}
+
+.login__input:focus {
+  outline: none;
+  border-color: var(--hard-ao);
+  background: var(--white);
+}
+
+.login__error {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--clay);
+  margin: 0;
+}
+
+.login__button {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: var(--radius);
+  background: var(--ink);
+  color: var(--chalk);
+  cursor: pointer;
+  transition: background var(--transition), transform var(--transition);
+}
+
+.login__button:hover {
+  background: var(--hard-ao);
+}
+
+.login__button:active {
+  transform: translateY(1px);
+}
+
+@media (max-width: 480px) {
+  .login {
+    margin: 2.5rem 1.25rem;
+    padding: 1.75rem 1.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .login__button {
+    transition: none;
+  }
+}
