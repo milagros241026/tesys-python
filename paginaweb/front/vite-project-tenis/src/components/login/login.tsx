@@ -1,5 +1,5 @@
 // components/Login/Login.tsx
-import { useState, FormEvent } from 'react';
+import { useState, InputEvent} from 'react';
 import './Login.css';
 
 interface LoginProps {
@@ -11,7 +11,7 @@ function Login({ onLoginSuccess }: LoginProps) {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: InputEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!usuario || !password) {
