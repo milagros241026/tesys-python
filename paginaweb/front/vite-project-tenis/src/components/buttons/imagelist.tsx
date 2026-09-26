@@ -25,7 +25,7 @@ export default function TitlebarBelowMasonryImageList() {
 //como pongo las imagenes ya descargadas//
 const itemData = [
   {
-    img: 'https://images.unsplash.com/photo-1549388604-817d15aa0110',
+    img: 'C:\proyectos\tesys\paginaweb\front\vite-project-tenis\src\assets\alcarazroland.jpg',
     title: 'Bed',
     author: 'swabdesign',
   },

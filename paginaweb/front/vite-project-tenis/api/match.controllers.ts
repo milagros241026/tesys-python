@@ -1,7 +1,28 @@
-const matchService = require('../services/match.service');
+import { Request, Response, NextFunction } from 'express';
+import * as matchService from '../services/match.service';
+
+interface MatchQueryParams {
+  player?: string;
+  tournament?: string;
+  surface?: string;
+  status?: string;
+}
+
+interface MatchParams {
+  id: string;
+}
+
+interface HeadToHeadQuery {
+  player1?: string;
+  player2?: string;
+}
 
 // GET /api/matches
-exports.getAllMatches = async (req, res, next) => {
+export const getAllMatches = async (
+  req: Request<{}, {}, {}, MatchQueryParams>,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
   try {
     const { player, tournament, surface, status } = req.query;
     const matches = await matchService.getAllMatches({ player, tournament, surface, status });
@@ -12,13 +33,18 @@ exports.getAllMatches = async (req, res, next) => {
 };
 
 // GET /api/matches/:id
-exports.getMatchById = async (req, res, next) => {
+export const getMatchById = async (
+  req: Request<MatchParams>,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
   try {
     const { id } = req.params;
     const match = await matchService.getMatchById(id);
 
     if (!match) {
-      return res.status(404).json({ success: false, message: 'Match not found' });
+      res.status(404).json({ success: false, message: 'Match not found' });
+      return;
     }
 
     res.status(200).json({ success: true, data: match });
@@ -28,7 +54,11 @@ exports.getMatchById = async (req, res, next) => {
 };
 
 // POST /api/matches
-exports.createMatch = async (req, res, next) => {
+export const createMatch = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
   try {
     const newMatch = await matchService.createMatch(req.body);
     res.status(201).json({ success: true, data: newMatch });
@@ -38,13 +68,18 @@ exports.createMatch = async (req, res, next) => {
 };
 
 // PUT /api/matches/:id
-exports.updateMatch = async (req, res, next) => {
+export const updateMatch = async (
+  req: Request<MatchParams>,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
   try {
     const { id } = req.params;
     const updatedMatch = await matchService.updateMatch(id, req.body);
 
     if (!updatedMatch) {
-      return res.status(404).json({ success: false, message: 'Match not found' });
+      res.status(404).json({ success: false, message: 'Match not found' });
+      return;
     }
 
     res.status(200).json({ success: true, data: updatedMatch });
@@ -54,13 +89,18 @@ exports.updateMatch = async (req, res, next) => {
 };
 
 // DELETE /api/matches/:id
-exports.deleteMatch = async (req, res, next) => {
+export const deleteMatch = async (
+  req: Request<MatchParams>,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
   try {
     const { id } = req.params;
     const deleted = await matchService.deleteMatch(id);
 
     if (!deleted) {
-      return res.status(404).json({ success: false, message: 'Match not found' });
+      res.status(404).json({ success: false, message: 'Match not found' });
+      return;
     }
 
     res.status(204).send();
@@ -70,15 +110,20 @@ exports.deleteMatch = async (req, res, next) => {
 };
 
 // GET /api/matches/h2h?player1=X&player2=Y
-exports.getHeadToHead = async (req, res, next) => {
+export const getHeadToHead = async (
+  req: Request<{}, {}, {}, HeadToHeadQuery>,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
   try {
     const { player1, player2 } = req.query;
 
     if (!player1 || !player2) {
-      return res.status(400).json({
+      res.status(400).json({
         success: false,
         message: 'player1 and player2 query params are required',
       });
+      return;
     }
 
     const h2h = await matchService.getHeadToHead(player1, player2);

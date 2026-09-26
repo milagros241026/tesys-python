@@ -1,7 +1,22 @@
-const tournamentService = require('../services/tournament.service');
+import { Request, Response, NextFunction } from 'express';
+import * as tournamentService from '../services/tournament.service';
+
+interface TournamentQueryParams {
+  year?: string;
+  surface?: string;
+  category?: string;
+}
+
+interface TournamentParams {
+  id: string;
+}
 
 // GET /api/tournaments
-exports.getAllTournaments = async (req, res, next) => {
+export const getAllTournaments = async (
+  req: Request<{}, {}, {}, TournamentQueryParams>,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
   try {
     const { year, surface, category } = req.query;
     const tournaments = await tournamentService.getAllTournaments({ year, surface, category });
@@ -12,13 +27,18 @@ exports.getAllTournaments = async (req, res, next) => {
 };
 
 // GET /api/tournaments/:id
-exports.getTournamentById = async (req, res, next) => {
+export const getTournamentById = async (
+  req: Request<TournamentParams>,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
   try {
     const { id } = req.params;
     const tournament = await tournamentService.getTournamentById(id);
 
     if (!tournament) {
-      return res.status(404).json({ success: false, message: 'Tournament not found' });
+      res.status(404).json({ success: false, message: 'Tournament not found' });
+      return;
     }
 
     res.status(200).json({ success: true, data: tournament });
@@ -28,7 +48,11 @@ exports.getTournamentById = async (req, res, next) => {
 };
 
 // POST /api/tournaments
-exports.createTournament = async (req, res, next) => {
+export const createTournament = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
   try {
     const newTournament = await tournamentService.createTournament(req.body);
     res.status(201).json({ success: true, data: newTournament });
@@ -38,13 +62,18 @@ exports.createTournament = async (req, res, next) => {
 };
 
 // PUT /api/tournaments/:id
-exports.updateTournament = async (req, res, next) => {
+export const updateTournament = async (
+  req: Request<TournamentParams>,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
   try {
     const { id } = req.params;
     const updatedTournament = await tournamentService.updateTournament(id, req.body);
 
     if (!updatedTournament) {
-      return res.status(404).json({ success: false, message: 'Tournament not found' });
+      res.status(404).json({ success: false, message: 'Tournament not found' });
+      return;
     }
 
     res.status(200).json({ success: true, data: updatedTournament });
@@ -54,13 +83,18 @@ exports.updateTournament = async (req, res, next) => {
 };
 
 // DELETE /api/tournaments/:id
-exports.deleteTournament = async (req, res, next) => {
+export const deleteTournament = async (
+  req: Request<TournamentParams>,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
   try {
     const { id } = req.params;
     const deleted = await tournamentService.deleteTournament(id);
 
     if (!deleted) {
-      return res.status(404).json({ success: false, message: 'Tournament not found' });
+      res.status(404).json({ success: false, message: 'Tournament not found' });
+      return;
     }
 
     res.status(204).send();
@@ -70,13 +104,18 @@ exports.deleteTournament = async (req, res, next) => {
 };
 
 // GET /api/tournaments/:id/draw
-exports.getTournamentDraw = async (req, res, next) => {
+export const getTournamentDraw = async (
+  req: Request<TournamentParams>,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
   try {
     const { id } = req.params;
     const draw = await tournamentService.getTournamentDraw(id);
 
     if (!draw) {
-      return res.status(404).json({ success: false, message: 'Draw not found' });
+      res.status(404).json({ success: false, message: 'Draw not found' });
+      return;
     }
 
     res.status(200).json({ success: true, data: draw });

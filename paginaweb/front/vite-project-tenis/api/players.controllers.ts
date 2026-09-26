@@ -1,7 +1,22 @@
-const playerService = require('../services/player.service');
+
+import { Request, Response, NextFunction } from 'express';
+import * as playerService from '../services/player.service';
+
+interface PlayerQueryParams {
+  country?: string;
+  tour?: string;
+}
+
+interface PlayerParams {
+  id: string;
+}
 
 // GET /api/players
-exports.getAllPlayers = async (req, res, next) => {
+export const getAllPlayers = async (
+  req: Request<{}, {}, {}, PlayerQueryParams>,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
   try {
     const { country, tour } = req.query;
     const players = await playerService.getAllPlayers({ country, tour });
@@ -12,13 +27,18 @@ exports.getAllPlayers = async (req, res, next) => {
 };
 
 // GET /api/players/:id
-exports.getPlayerById = async (req, res, next) => {
+export const getPlayerById = async (
+  req: Request<PlayerParams>,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
   try {
     const { id } = req.params;
     const player = await playerService.getPlayerById(id);
 
     if (!player) {
-      return res.status(404).json({ success: false, message: 'Player not found' });
+      res.status(404).json({ success: false, message: 'Player not found' });
+      return;
     }
 
     res.status(200).json({ success: true, data: player });
@@ -28,7 +48,11 @@ exports.getPlayerById = async (req, res, next) => {
 };
 
 // POST /api/players
-exports.createPlayer = async (req, res, next) => {
+export const createPlayer = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
   try {
     const newPlayer = await playerService.createPlayer(req.body);
     res.status(201).json({ success: true, data: newPlayer });
@@ -38,13 +62,18 @@ exports.createPlayer = async (req, res, next) => {
 };
 
 // PUT /api/players/:id
-exports.updatePlayer = async (req, res, next) => {
+export const updatePlayer = async (
+  req: Request<PlayerParams>,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
   try {
     const { id } = req.params;
     const updatedPlayer = await playerService.updatePlayer(id, req.body);
 
     if (!updatedPlayer) {
-      return res.status(404).json({ success: false, message: 'Player not found' });
+      res.status(404).json({ success: false, message: 'Player not found' });
+      return;
     }
 
     res.status(200).json({ success: true, data: updatedPlayer });
@@ -54,13 +83,18 @@ exports.updatePlayer = async (req, res, next) => {
 };
 
 // DELETE /api/players/:id
-exports.deletePlayer = async (req, res, next) => {
+export const deletePlayer = async (
+  req: Request<PlayerParams>,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
   try {
     const { id } = req.params;
     const deleted = await playerService.deletePlayer(id);
 
     if (!deleted) {
-      return res.status(404).json({ success: false, message: 'Player not found' });
+      res.status(404).json({ success: false, message: 'Player not found' });
+      return;
     }
 
     res.status(204).send();
@@ -70,7 +104,11 @@ exports.deletePlayer = async (req, res, next) => {
 };
 
 // GET /api/players/:id/matches
-exports.getPlayerMatches = async (req, res, next) => {
+export const getPlayerMatches = async (
+  req: Request<PlayerParams>,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
   try {
     const { id } = req.params;
     const matches = await playerService.getPlayerMatches(id);
