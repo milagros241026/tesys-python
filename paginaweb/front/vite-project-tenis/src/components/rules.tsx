@@ -6,7 +6,7 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 
-import { reglas } from '../../data/reglas';
+import { reglas } from '../data/rules';
 
 export default function Reglas() {
   const [reglaAbierta, setReglaAbierta] = useState<number | null>(null);

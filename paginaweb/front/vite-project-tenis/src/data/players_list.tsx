@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import './Jugadores.css';
+import './jugadores.css';
 
 interface Jugador {
   id: number;

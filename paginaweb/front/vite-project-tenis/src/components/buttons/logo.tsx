@@ -1,13 +1,13 @@
 import { Box } from "@mui/material";
-import logo from "./assets/logo.png";
+import logo from "../../assets/AOlogo.png";
 
-function App() {
+export default function Logo() {
   return (
     <Box>
       <Box
         component="img"
         src={logo}
-        alt="Logo"
+        alt="Australian Open"
         sx={{
           height: 60,
           width: "auto",
@@ -16,5 +16,3 @@ function App() {
     </Box>
   );
 }
-
-export default App;

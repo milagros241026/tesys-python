@@ -5,7 +5,7 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 
-import { curiosidades } from '../../data/curiosidades';
+import { curiosidades } from '../data/curiosidades';
 
 export default function Curiosidades() {
   const [indice, setIndice] = useState(0);

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import LoginForm from './login/LoginForm'
+import { clearSession } from './services/api'
 
 function App() {
   const [username, setUsername] = useState<string | null>(() =>
@@ -11,8 +12,7 @@ function App() {
   }
 
   const handleLogout = () => {
-    localStorage.removeItem('token')
-    localStorage.removeItem('username')
+    clearSession()
     setUsername(null)
   }
 

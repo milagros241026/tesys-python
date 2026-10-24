@@ -38,7 +38,7 @@ function SlamCard({ slam }: SlamCardProps) {
           <Chip label={slam.pais} size="small" />
         </Stack>
 
-        <Stack direction="row" spacing={1} mb={1.5} flexWrap="wrap">
+        <Stack direction="row" spacing={1} sx={{ mb: 1.5, flexWrap: 'wrap' }}>
           <Typography variant="body2" color="text.secondary">
             {slam.ciudad}
           </Typography>

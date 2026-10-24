@@ -1,10 +1,5 @@
 import { useState, type FormEvent } from 'react'
-
-interface LoginResponse {
-  token: string
-  username: string
-  expiresInMs: number
-}
+import { login } from '../services/api'
 
 interface LoginFormProps {
   onLoginSuccess: (username: string) => void
@@ -22,25 +17,14 @@ export default function LoginForm({ onLoginSuccess }: LoginFormProps) {
     setLoading(true)
 
     try {
-      const response = await fetch('http://localhost:8080/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password }),
-      })
-
-      if (!response.ok) {
-        setError('Usuario o contraseña incorrectos')
-        return
-      }
-
-      const data: LoginResponse = await response.json()
+      const data = await login(username, password)
 
       localStorage.setItem('token', data.token)
       localStorage.setItem('username', data.username)
 
       onLoginSuccess(data.username)
-    } catch {
-      setError('No se pudo conectar con el servidor')
+    } catch (error) {
+      setError(error instanceof Error ? error.message : 'No se pudo conectar con el servidor')
     } finally {
       setLoading(false)
     }

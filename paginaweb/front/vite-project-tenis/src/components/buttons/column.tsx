@@ -1,5 +1,5 @@
-import {Info} from 'lucide-react';
 import { DataGrid } from '@mui/x-data-grid';
+import type { GridColDef } from '@mui/x-data-grid';
 
 const rows = [
   {
@@ -16,15 +16,17 @@ const rows = [
   },
 ];
 
+const columns: GridColDef[] = [
+  { field: 'username', headerName: 'Usuario', flex: 1, hideable: false },
+  { field: 'age', headerName: 'Edad', type: 'number', width: 100 },
+  { field: 'desk', headerName: 'Escritorio', width: 130 },
+];
+
 export default function VisibleColumnsBasicExample() {
   return (
     <div style={{ height: 250, width: '100%' }}>
-      <Info
-        Columns={[
-          { field: 'username', hideable: false, rowHeader: true },
-          { field: 'age' },
-          { field: 'desk' },
-        ]}
+      <DataGrid
+        columns={columns}
         rows={rows}
         showToolbar
       />
