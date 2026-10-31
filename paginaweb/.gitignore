@@ -1,0 +1,19 @@
+# Build output and dependency caches
+.m2/
+back/target/
+front/.vite/
+front/node_modules/
+front/vite-project-tenis/node_modules/
+front/vite-project-tenis/dist/
+
+# Local environment files
+.env
+.env.*
+!.env.example
+
+# IDE and operating-system files
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db
