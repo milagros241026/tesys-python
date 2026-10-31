@@ -26,7 +26,10 @@ public class AuthController {
             new UsernamePasswordAuthenticationToken(req.username(), req.password()));
         UserDetails user = userDetailsService.loadUserByUsername(req.username());
         String token = jwtService.generateToken(user);
-        return ResponseEntity.ok(Map.of("token", token));
+        return ResponseEntity.ok(Map.of(
+                "token", token,
+                "username", user.getUsername(),
+                "expiresInMs", 3600_000L));
     }
 
     public record LoginRequest(String username, String password) {
