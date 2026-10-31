@@ -1,14 +1,17 @@
-import org.hibernate.validator.constraints.UUID;
+package com.paginaweb.back.models;
 
+import java.util.UUID;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 @Entity
-public class Player {
+public class Tournament {
 
-    @UUID
-    @GeneratedValue
-    private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     private String name;
 
@@ -16,11 +19,11 @@ public class Player {
 
     private String description;
 
-    public Player(){
+    public Tournament(){
         
     }
 
-    public Player(String name, String country, String description){
+    public Tournament(String name, String country, String description){
         this.name = name;
         this.country = country;
         this.description = description;
@@ -38,3 +41,5 @@ public class Player {
         return description;
     }
 }
+
+
