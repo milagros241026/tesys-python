@@ -1,0 +1,19 @@
+name: Java 25 backend
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+          cache: maven
+      - name: Compile backend and test sources for Java 25
+        working-directory: paginaweb/back
+        run: ./mvnw --batch-mode --no-transfer-progress clean test-compile

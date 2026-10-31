@@ -1,10 +1,10 @@
 # Tesys - Backend
 
-Backend del proyecto en **Spring Boot 4.1** (Java 21) con **Spring Data JPA** + **PostgreSQL**.
+Backend del proyecto en **Spring Boot 4.1** (Java 25) con **Spring Data JPA** + **PostgreSQL**.
 
 ## Requisitos
 
-- **Java 21** (JDK)
+- **Java 25** (JDK)
 - **Docker** (Docker Desktop en Windows/Mac, Docker Engine en Linux) — para levantar la base de datos
 - No hace falta instalar Maven: el proyecto trae el wrapper (`mvnw` / `mvnw.cmd`)
 
@@ -14,6 +14,7 @@ Backend del proyecto en **Spring Boot 4.1** (Java 21) con **Spring Data JPA** + 
 back/
 ├── mvnw / mvnw.cmd          # Maven Wrapper (Linux/Mac / Windows)
 ├── pom.xml                  # Dependencias del proyecto
+├── Dockerfile               # Imagen de runtime Java 25
 ├── docker-compose.yml       # Levanta Postgres para desarrollo local
 └── src/main/
     ├── java/com/paginaweb/back/
@@ -99,6 +100,12 @@ cd paginaweb\back
 ```
 
 El backend queda arriba en `http://localhost:8080`.
+
+También podés levantar el backend y PostgreSQL juntos desde esta carpeta:
+
+```bash
+docker compose up --build
+```
 
 ## Configuración de la base de datos
 
