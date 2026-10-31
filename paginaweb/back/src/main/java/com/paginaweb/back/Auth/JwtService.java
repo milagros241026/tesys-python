@@ -6,12 +6,19 @@ import javax.crypto.SecretKey;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Value;
 
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
 
 @Service
 public class JwtService {
-    private final SecretKey key = Jwts.SIG.HS256.key().build();
+    private final SecretKey key;
+
+    public JwtService(@Value("${app.jwt.secret}") String encodedSecret) {
+        key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(encodedSecret));
+    }
 
     public String generateToken(UserDetails user) {
         return Jwts.builder()
