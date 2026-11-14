@@ -8,6 +8,8 @@ interface Jugador {
   nacimiento: string;
   mano: string;
   imagen: string;
+  ranking: number;
+  circuito: 'ATP' | 'WTA';
 }
 
 const jugadores: Jugador[] = [
@@ -17,7 +19,9 @@ const jugadores: Jugador[] = [
     pais: 'España 🇪🇸',
     nacimiento: '2003-05-05',
     mano: 'Derecha',
-    imagen: '/jugadores/alcaraz.jpg'
+    imagen: '/jugadores/alcaraz.jpg',
+    ranking: 3,
+    circuito: 'ATP'
   },
   {
     id: 2,
@@ -25,7 +29,9 @@ const jugadores: Jugador[] = [
     pais: 'Italia 🇮🇹',
     nacimiento: '2001-08-16',
     mano: 'Derecha',
-    imagen: '/jugadores/sinner.jpg'
+    imagen: '/jugadores/sinner.jpg',
+    ranking: 2,
+    circuito: 'ATP'
   },
   {
     id: 3,
@@ -33,7 +39,9 @@ const jugadores: Jugador[] = [
     pais: 'Serbia 🇷🇸',
     nacimiento: '1987-05-22',
     mano: 'Derecha',
-    imagen: '/jugadores/djokovic.jpg'
+    imagen: '/jugadores/djokovic.jpg',
+    ranking: 12,
+    circuito: 'ATP'
   },
   {
     id: 4,
@@ -41,7 +49,9 @@ const jugadores: Jugador[] = [
     pais: 'Alemania 🇩🇪',
     nacimiento: '1997-04-20',
     mano: 'Derecha',
-    imagen: '/jugadores/zverev.jpg'
+    imagen: '/jugadores/zverev.jpg',
+    ranking: 1,
+    circuito: 'ATP'
   },
   {
     id: 5,
@@ -49,7 +59,9 @@ const jugadores: Jugador[] = [
     pais: 'Polonia 🇵🇱',
     nacimiento: '2001-05-31',
     mano: 'Derecha',
-    imagen: '/jugadores/swiatek.jpg'
+    imagen: '/jugadores/swiatek.jpg',
+    ranking: 9,
+    circuito: 'WTA'
   },
   {
     id: 6,
@@ -57,7 +69,9 @@ const jugadores: Jugador[] = [
     pais: 'Bielorrusia 🇧🇾',
     nacimiento: '1998-05-05',
     mano: 'Derecha',
-    imagen: '/jugadores/sabalenka.jpg'
+    imagen: '/jugadores/sabalenka.jpg',
+    ranking: 2,
+    circuito: 'WTA'
   }
 ];
 
@@ -143,6 +157,9 @@ function Jugadores() {
         .h2h-table tr:last-child td { border-bottom:0; }
         .h2h-table .h2h-winner { color:#174c38; font-weight:750; }
         .h2h-note { margin:18px 0 0; color:#879188; font-size:10px; line-height:1.5; }
+        .jugador-ranking { display:inline-flex; align-items:center; gap:6px; margin:0 0 10px; padding:5px 8px; border-radius:6px; background:#edf4ec; color:#174c38; font-size:11px; font-weight:750; }
+        .jugador-ranking small { color:#77877a; font-size:9px; font-weight:700; }
+        .h2h-ranking { color:#6e7e72; font-size:10px; font-weight:700; }
         @media (max-width:600px) {
           .h2h-panel { margin-top:38px; padding:20px 15px; }
           .h2h-heading { align-items:start; }
@@ -169,6 +186,9 @@ function Jugadores() {
         className="jugadores-buscador"
       />
 
+      <p style={{ margin: '0 0 14px', color: '#859087', fontSize: 11 }}>
+        Rankings individuales ATP y WTA · actualización: 9 de noviembre de 2026
+      </p>
       <div className="jugadores-contenedor">
         {jugadoresFiltrados.map((jugador) => (
           <div className="jugador-card" key={jugador.id}>
@@ -181,6 +201,7 @@ function Jugadores() {
 
             <div className="jugador-info">
               <h3>{jugador.nombre}</h3>
+              <p className="jugador-ranking">#{jugador.ranking} <small>{jugador.circuito} · Individuales</small></p>
 
               <p><strong>País:</strong> {jugador.pais}</p>
 
@@ -208,7 +229,7 @@ function Jugadores() {
               setJugadorAId(id);
               if (id === jugadorBId) setJugadorBId(jugadorAId);
             }}>
-              {jugadores.map((jugador) => <option key={jugador.id} value={jugador.id}>{jugador.nombre}</option>)}
+              {jugadores.map((jugador) => <option key={jugador.id} value={jugador.id}>#{jugador.ranking} {jugador.circuito} · {jugador.nombre}</option>)}
             </select>
           </label>
           <span className="h2h-vs">VS</span>
@@ -218,15 +239,15 @@ function Jugadores() {
               setJugadorBId(id);
               if (id === jugadorAId) setJugadorAId(jugadorBId);
             }}>
-              {jugadores.map((jugador) => <option key={jugador.id} value={jugador.id}>{jugador.nombre}</option>)}
+              {jugadores.map((jugador) => <option key={jugador.id} value={jugador.id}>#{jugador.ranking} {jugador.circuito} · {jugador.nombre}</option>)}
             </select>
           </label>
         </div>
 
         <div className="h2h-scoreboard">
-          <div className="h2h-player"><img src={jugadorA.imagen} alt="" /><div><span>ENFRENTAMIENTOS</span><strong>{jugadorA.nombre}</strong></div></div>
+          <div className="h2h-player"><img src={jugadorA.imagen} alt="" /><div><span>{jugadorA.circuito} · INDIVIDUALES</span><strong>{jugadorA.nombre}</strong><small className="h2h-ranking">Puesto #{jugadorA.ranking}</small></div></div>
           <div className="h2h-record"><strong>{victoriasA}</strong><span>Victorias</span><strong>{victoriasB}</strong></div>
-          <div className="h2h-player h2h-player-right"><div><span>ENFRENTAMIENTOS</span><strong>{jugadorB.nombre}</strong></div><img src={jugadorB.imagen} alt="" /></div>
+          <div className="h2h-player h2h-player-right"><div><span>{jugadorB.circuito} · INDIVIDUALES</span><strong>{jugadorB.nombre}</strong><small className="h2h-ranking">Puesto #{jugadorB.ranking}</small></div><img src={jugadorB.imagen} alt="" /></div>
         </div>
 
         <div className="h2h-table-wrap">
@@ -237,7 +258,7 @@ function Jugadores() {
             </tr>)}</tbody>
           </table>
         </div>
-        <p className="h2h-note">Vista de demostración: reemplazá estos resultados de ejemplo por datos oficiales para publicar estadísticas reales.</p>
+        <p className="h2h-note">Rankings individuales consultados el 9 de noviembre de 2026. La tabla de enfrentamientos sigue siendo una demostración con resultados de ejemplo.</p>
       </section>
 
       {jugadoresFiltrados.length === 0 && (
