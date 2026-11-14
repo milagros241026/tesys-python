@@ -15,6 +15,11 @@ const jugadores: Jugador[] = [
     nacimiento: '2003-05-05',
     mano: 'Derecha',
     imagen: '/jugadores/alcaraz.jpg',
+    foto: {
+      autor: 'Barcex',
+      licencia: 'CC BY-SA 4.0',
+      fuente: 'https://commons.wikimedia.org/wiki/File:25th_Laureus_World_Sports_Awards_-_Red_Carpet_-_Carlos_Alcaraz_-_240422_192324_(cropped).jpg',
+    },
     ranking: 3,
     circuito: 'ATP'
   },
@@ -25,6 +30,11 @@ const jugadores: Jugador[] = [
     nacimiento: '2001-08-16',
     mano: 'Derecha',
     imagen: '/jugadores/sinner.jpg',
+    foto: {
+      autor: 'Hameltion',
+      licencia: 'CC BY-SA 4.0',
+      fuente: 'https://commons.wikimedia.org/wiki/File:Jannik_Sinner_(2024_US_Open)_04_(cropped).jpg',
+    },
     ranking: 2,
     circuito: 'ATP'
   },
@@ -35,6 +45,11 @@ const jugadores: Jugador[] = [
     nacimiento: '1987-05-22',
     mano: 'Derecha',
     imagen: '/jugadores/djokovic.jpg',
+    foto: {
+      autor: 'Kuberzog',
+      licencia: 'CC BY 4.0',
+      fuente: 'https://commons.wikimedia.org/wiki/File:Novak_Djokovic_-_Roland-Garros_-_28.05.2024_croped.jpg',
+    },
     ranking: 12,
     circuito: 'ATP'
   },
@@ -45,6 +60,11 @@ const jugadores: Jugador[] = [
     nacimiento: '1997-04-20',
     mano: 'Derecha',
     imagen: '/jugadores/zverev.jpg',
+    foto: {
+      autor: 'si.robi',
+      licencia: 'CC BY-SA 2.0',
+      fuente: 'https://commons.wikimedia.org/wiki/File:Zverev_MCM23_(20).jpg',
+    },
     ranking: 1,
     circuito: 'ATP'
   },
@@ -54,7 +74,12 @@ const jugadores: Jugador[] = [
     pais: 'Polonia 🇵🇱',
     nacimiento: '2001-05-31',
     mano: 'Derecha',
-    imagen: '/jugadores/swiatek.jpg',
+    imagen: 'https://photoresources.wtatennis.com/photo-resources/2026/04/08/08e03c88-cb36-4209-9182-5c06eaa6338b/Swiatek-Torso_326408.png?width=1580&height=1480',
+    foto: {
+      autor: 'WTA',
+      licencia: 'Foto oficial',
+      fuente: 'https://www.wtatennis.com/players/326408/iga-swiatek',
+    },
     ranking: 9,
     circuito: 'WTA'
   },
@@ -65,6 +90,11 @@ const jugadores: Jugador[] = [
     nacimiento: '1998-05-05',
     mano: 'Derecha',
     imagen: '/jugadores/sabalenka.jpg',
+    foto: {
+      autor: 'Ocoudis',
+      licencia: 'CC0',
+      fuente: 'https://commons.wikimedia.org/wiki/File:Aryna_Sabalenka_US_Open_2024_practice_(cropped).jpg',
+    },
     ranking: 2,
     circuito: 'WTA'
   }
@@ -155,7 +185,11 @@ function Jugadores() {
         .h2h-note { margin:18px 0 0; color:#879188; font-size:10px; line-height:1.5; }
         .jugador-ranking { display:inline-flex; align-items:center; gap:6px; margin:0 0 10px; padding:5px 8px; border-radius:6px; background:#edf4ec; color:#174c38; font-size:11px; font-weight:750; }
         .jugador-ranking small { color:#77877a; font-size:9px; font-weight:700; }
+        .jugador-image-credit { display:block; padding:6px 10px; color:#77817a; font-size:9px; text-align:center; }
+        .jugador-image-credit a { color:inherit; }
         .h2h-ranking { color:#6e7e72; font-size:10px; font-weight:700; }
+        .h2h-photo-credit { color:#77817a; font-size:8px; }
+        .h2h-photo-credit a { color:inherit; }
         .perfil-button { margin-top:8px; padding:9px 12px; border:0; border-radius:7px; background:#174c38; color:white; font-size:11px; font-weight:700; cursor:pointer; }
         .perfil-button:hover { background:#103b2b; }
         @media (max-width:600px) {
@@ -196,6 +230,9 @@ function Jugadores() {
               alt={jugador.nombre}
               className="jugador-imagen"
             />
+            <small className="jugador-image-credit">
+              Foto: <a href={jugador.foto.fuente} target="_blank" rel="noreferrer">{jugador.foto.autor}</a> · {jugador.foto.licencia}
+            </small>
 
             <div className="jugador-info">
               <h3>{jugador.nombre}</h3>
@@ -246,9 +283,9 @@ function Jugadores() {
         </div>
 
         <div className="h2h-scoreboard">
-          <div className="h2h-player"><img src={jugadorA.imagen} alt="" /><div><span>{jugadorA.circuito} · INDIVIDUALES</span><strong>{jugadorA.nombre}</strong><small className="h2h-ranking">Puesto #{jugadorA.ranking}</small></div></div>
+          <div className="h2h-player"><img src={jugadorA.imagen} alt="" /><div><span>{jugadorA.circuito} · INDIVIDUALES</span><strong>{jugadorA.nombre}</strong><small className="h2h-ranking">Puesto #{jugadorA.ranking}</small><small className="h2h-photo-credit">Foto: <a href={jugadorA.foto.fuente} target="_blank" rel="noreferrer">{jugadorA.foto.autor}</a> · {jugadorA.foto.licencia}</small></div></div>
           <div className="h2h-record"><strong>{victoriasA}</strong><span>Victorias</span><strong>{victoriasB}</strong></div>
-          <div className="h2h-player h2h-player-right"><div><span>{jugadorB.circuito} · INDIVIDUALES</span><strong>{jugadorB.nombre}</strong><small className="h2h-ranking">Puesto #{jugadorB.ranking}</small></div><img src={jugadorB.imagen} alt="" /></div>
+          <div className="h2h-player h2h-player-right"><div><span>{jugadorB.circuito} · INDIVIDUALES</span><strong>{jugadorB.nombre}</strong><small className="h2h-ranking">Puesto #{jugadorB.ranking}</small><small className="h2h-photo-credit">Foto: <a href={jugadorB.foto.fuente} target="_blank" rel="noreferrer">{jugadorB.foto.autor}</a> · {jugadorB.foto.licencia}</small></div><img src={jugadorB.imagen} alt="" /></div>
         </div>
 
         <div className="h2h-table-wrap">

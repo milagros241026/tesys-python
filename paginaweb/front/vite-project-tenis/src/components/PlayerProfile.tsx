@@ -6,6 +6,11 @@ export interface JugadorPerfil {
   nacimiento: string;
   mano: string;
   imagen: string;
+  foto: {
+    autor: string;
+    licencia: string;
+    fuente: string;
+  };
   ranking: number;
   circuito: 'ATP' | 'WTA';
 }
@@ -43,7 +48,10 @@ export default function PlayerProfile({ jugador, onClose }: PlayerProfileProps) 
       <style>{`
         .perfil-overlay { position:fixed; z-index:20; inset:0; display:grid; place-items:center; padding:20px; background:rgba(10,28,19,.68); }
         .perfil-modal { position:relative; display:grid; width:min(100%,520px); grid-template-columns:minmax(150px,.8fr) 1.2fr; overflow:hidden; border-radius:14px; background:white; box-shadow:0 18px 56px #0004; }
-        .perfil-modal-image { width:100%; height:100%; min-height:250px; object-fit:cover; background:#e4ebe5; }
+        .perfil-modal-photo { display:flex; flex-direction:column; }
+        .perfil-modal-image { width:100%; height:100%; min-height:250px; object-fit:contain; background:#e4ebe5; }
+        .perfil-photo-credit { padding:7px 10px; color:#77817a; font-size:9px; text-align:center; }
+        .perfil-photo-credit a { color:inherit; }
         .perfil-modal-info { align-self:center; padding:26px; }
         .perfil-close { position:absolute; top:9px; right:9px; display:grid; width:29px; height:29px; place-items:center; border:0; border-radius:50%; background:#f0f3ef; color:#34463a; font-size:19px; cursor:pointer; }
         .perfil-kicker { margin:0 0 6px; color:#64806d; font-size:9px; font-weight:800; letter-spacing:1.2px; }
@@ -64,7 +72,12 @@ export default function PlayerProfile({ jugador, onClose }: PlayerProfileProps) 
       }}>
         <section className="perfil-modal" role="dialog" aria-modal="true" aria-labelledby="perfil-nombre">
           <button className="perfil-close" type="button" aria-label="Cerrar perfil" onClick={onClose}>×</button>
-          <img className="perfil-modal-image" src={jugador.imagen} alt={jugador.nombre} />
+          <div className="perfil-modal-photo">
+            <img className="perfil-modal-image" src={jugador.imagen} alt={jugador.nombre} />
+            <small className="perfil-photo-credit">
+              Foto: <a href={jugador.foto.fuente} target="_blank" rel="noreferrer">{jugador.foto.autor}</a> · {jugador.foto.licencia}
+            </small>
+          </div>
           <div className="perfil-modal-info">
             <p className="perfil-kicker">PERFIL · {jugador.circuito} INDIVIDUALES</p>
             <h2 id="perfil-nombre">{jugador.nombre}</h2>
