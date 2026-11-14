@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import PlayerProfile, { type JugadorPerfil } from '../components/PlayerProfile';
+import RankingFAQ from '../components/RankingFAQ';
 import './jugadores.css';
 
 interface Jugador extends JugadorPerfil {
@@ -213,6 +214,8 @@ function Jugadores() {
           </div>
         ))}
       </div>
+
+      <RankingFAQ />
 
       <section className="h2h-panel" id="h2h" aria-labelledby="h2h-titulo">
         <div className="h2h-heading">
