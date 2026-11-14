@@ -1,15 +1,9 @@
 import { useMemo, useState } from 'react';
+import PlayerProfile, { type JugadorPerfil } from '../components/PlayerProfile';
 import './jugadores.css';
 
-interface Jugador {
+interface Jugador extends JugadorPerfil {
   id: number;
-  nombre: string;
-  pais: string;
-  nacimiento: string;
-  mano: string;
-  imagen: string;
-  ranking: number;
-  circuito: 'ATP' | 'WTA';
 }
 
 const jugadores: Jugador[] = [
@@ -95,6 +89,7 @@ function calcularEdad(fechaNacimiento: string): number {
 
 function Jugadores() {
   const [busqueda, setBusqueda] = useState('');
+  const [perfilAbierto, setPerfilAbierto] = useState<Jugador | null>(null);
   const [jugadorAId, setJugadorAId] = useState(1);
   const [jugadorBId, setJugadorBId] = useState(2);
 
@@ -160,6 +155,8 @@ function Jugadores() {
         .jugador-ranking { display:inline-flex; align-items:center; gap:6px; margin:0 0 10px; padding:5px 8px; border-radius:6px; background:#edf4ec; color:#174c38; font-size:11px; font-weight:750; }
         .jugador-ranking small { color:#77877a; font-size:9px; font-weight:700; }
         .h2h-ranking { color:#6e7e72; font-size:10px; font-weight:700; }
+        .perfil-button { margin-top:8px; padding:9px 12px; border:0; border-radius:7px; background:#174c38; color:white; font-size:11px; font-weight:700; cursor:pointer; }
+        .perfil-button:hover { background:#103b2b; }
         @media (max-width:600px) {
           .h2h-panel { margin-top:38px; padding:20px 15px; }
           .h2h-heading { align-items:start; }
@@ -210,6 +207,7 @@ function Jugadores() {
               </p>
 
               <p><strong>Mano hábil:</strong> {jugador.mano}</p>
+              <button className="perfil-button" type="button" onClick={() => setPerfilAbierto(jugador)}>Ver perfil</button>
             </div>
 
           </div>
@@ -260,6 +258,8 @@ function Jugadores() {
         </div>
         <p className="h2h-note">Rankings individuales consultados el 9 de noviembre de 2026. La tabla de enfrentamientos sigue siendo una demostración con resultados de ejemplo.</p>
       </section>
+
+      <PlayerProfile jugador={perfilAbierto} onClose={() => setPerfilAbierto(null)} />
 
       {jugadoresFiltrados.length === 0 && (
         <p className="jugadores-vacio">
