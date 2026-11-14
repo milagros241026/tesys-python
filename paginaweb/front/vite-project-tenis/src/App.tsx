@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { LogOut, Trophy, Users, Sparkles } from 'lucide-react'
 import LoginForm from './login/LoginForm'
 import Curiosidades from './components/curiosidades'
+import TournamentGuide from './components/TournamentGuide'
 import Jugadores from './data/players_list'
 import { clearSession } from './services/api'
 import './App.css'
@@ -44,6 +45,7 @@ function App() {
         <nav className="main-nav" aria-label="Navegación principal">
           <a href="#inicio">Inicio</a>
           <a href="#curiosidades">Curiosidades</a>
+          <a href="#torneos">Torneos</a>
           <a href="#jugadores">Jugadores</a>
         </nav>
         <div className="profile-menu">
@@ -84,6 +86,8 @@ function App() {
           </div>
           <Curiosidades />
         </section>
+
+        <TournamentGuide />
 
         <section id="jugadores" className="content-section players-section">
           <div className="section-heading">
