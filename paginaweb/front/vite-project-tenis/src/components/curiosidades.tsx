@@ -16,18 +16,6 @@ export default function Curiosidades() {
 
   return (
     <Box sx={{ padding: 4, textAlign: 'center' }}>
-
-      <Typography
-        variant="h4"
-        sx={{
-          marginBottom: 4,
-          color: '#1b4332',
-          fontWeight: 'bold'
-        }}
-      >
-        🎾 Datos curiosos del tenis
-      </Typography>
-
       <Card
         sx={{
           maxWidth: 500,
@@ -68,7 +56,7 @@ export default function Curiosidades() {
           }
         }}
       >
-        🎾 Mostrar otra curiosidad
+        Mostrar otra curiosidad
       </Button>
 
     </Box>

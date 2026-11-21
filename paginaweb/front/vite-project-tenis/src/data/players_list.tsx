@@ -44,12 +44,7 @@ const jugadores: Jugador[] = [
     pais: 'Serbia 🇷🇸',
     nacimiento: '1987-05-22',
     mano: 'Derecha',
-    imagen: '/jugadores/djokovic.jpg',
-    foto: {
-      autor: 'Kuberzog',
-      licencia: 'CC BY 4.0',
-      fuente: 'https://commons.wikimedia.org/wiki/File:Novak_Djokovic_-_Roland-Garros_-_28.05.2024_croped.jpg',
-    },
+    imagen: '/jugadores/djokovic.png',
     ranking: 12,
     circuito: 'ATP'
   },
@@ -59,12 +54,7 @@ const jugadores: Jugador[] = [
     pais: 'Alemania 🇩🇪',
     nacimiento: '1997-04-20',
     mano: 'Derecha',
-    imagen: '/jugadores/zverev.jpg',
-    foto: {
-      autor: 'si.robi',
-      licencia: 'CC BY-SA 2.0',
-      fuente: 'https://commons.wikimedia.org/wiki/File:Zverev_MCM23_(20).jpg',
-    },
+    imagen: '/jugadores/zverev.png',
     ranking: 1,
     circuito: 'ATP'
   },
@@ -74,6 +64,7 @@ const jugadores: Jugador[] = [
     pais: 'Polonia 🇵🇱',
     nacimiento: '2001-05-31',
     mano: 'Derecha',
+    imagen: '/jugadores/swiatek.png',
     ranking: 9,
     circuito: 'WTA'
   },
@@ -83,12 +74,7 @@ const jugadores: Jugador[] = [
     pais: 'Bielorrusia 🇧🇾',
     nacimiento: '1998-05-05',
     mano: 'Derecha',
-    imagen: '/jugadores/sabalenka.jpg',
-    foto: {
-      autor: 'Ocoudis',
-      licencia: 'CC0',
-      fuente: 'https://commons.wikimedia.org/wiki/File:Aryna_Sabalenka_US_Open_2024_practice_(cropped).jpg',
-    },
+    imagen: '/jugadores/sabalenka.png',
     ranking: 2,
     circuito: 'WTA'
   }
