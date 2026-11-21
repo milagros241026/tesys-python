@@ -74,12 +74,6 @@ const jugadores: Jugador[] = [
     pais: 'Polonia 🇵🇱',
     nacimiento: '2001-05-31',
     mano: 'Derecha',
-    imagen: 'https://photoresources.wtatennis.com/photo-resources/2026/04/08/08e03c88-cb36-4209-9182-5c06eaa6338b/Swiatek-Torso_326408.png?width=1580&height=1480',
-    foto: {
-      autor: 'WTA',
-      licencia: 'Foto oficial',
-      fuente: 'https://www.wtatennis.com/players/326408/iga-swiatek',
-    },
     ranking: 9,
     circuito: 'WTA'
   },
@@ -225,14 +219,14 @@ function Jugadores() {
         {jugadoresFiltrados.map((jugador) => (
           <div className="jugador-card" key={jugador.id}>
 
-            <img
+            {jugador.imagen && <img
               src={jugador.imagen}
               alt={jugador.nombre}
               className="jugador-imagen"
-            />
-            <small className="jugador-image-credit">
+            />}
+            {jugador.imagen && jugador.foto && <small className="jugador-image-credit">
               Foto: <a href={jugador.foto.fuente} target="_blank" rel="noreferrer">{jugador.foto.autor}</a> · {jugador.foto.licencia}
-            </small>
+            </small>}
 
             <div className="jugador-info">
               <h3>{jugador.nombre}</h3>
@@ -283,9 +277,9 @@ function Jugadores() {
         </div>
 
         <div className="h2h-scoreboard">
-          <div className="h2h-player"><img src={jugadorA.imagen} alt="" /><div><span>{jugadorA.circuito} · INDIVIDUALES</span><strong>{jugadorA.nombre}</strong><small className="h2h-ranking">Puesto #{jugadorA.ranking}</small><small className="h2h-photo-credit">Foto: <a href={jugadorA.foto.fuente} target="_blank" rel="noreferrer">{jugadorA.foto.autor}</a> · {jugadorA.foto.licencia}</small></div></div>
+          <div className="h2h-player">{jugadorA.imagen && <img src={jugadorA.imagen} alt="" />}<div><span>{jugadorA.circuito} · INDIVIDUALES</span><strong>{jugadorA.nombre}</strong><small className="h2h-ranking">Puesto #{jugadorA.ranking}</small>{jugadorA.imagen && jugadorA.foto && <small className="h2h-photo-credit">Foto: <a href={jugadorA.foto.fuente} target="_blank" rel="noreferrer">{jugadorA.foto.autor}</a> · {jugadorA.foto.licencia}</small>}</div></div>
           <div className="h2h-record"><strong>{victoriasA}</strong><span>Victorias</span><strong>{victoriasB}</strong></div>
-          <div className="h2h-player h2h-player-right"><div><span>{jugadorB.circuito} · INDIVIDUALES</span><strong>{jugadorB.nombre}</strong><small className="h2h-ranking">Puesto #{jugadorB.ranking}</small><small className="h2h-photo-credit">Foto: <a href={jugadorB.foto.fuente} target="_blank" rel="noreferrer">{jugadorB.foto.autor}</a> · {jugadorB.foto.licencia}</small></div><img src={jugadorB.imagen} alt="" /></div>
+          <div className="h2h-player h2h-player-right"><div><span>{jugadorB.circuito} · INDIVIDUALES</span><strong>{jugadorB.nombre}</strong><small className="h2h-ranking">Puesto #{jugadorB.ranking}</small>{jugadorB.imagen && jugadorB.foto && <small className="h2h-photo-credit">Foto: <a href={jugadorB.foto.fuente} target="_blank" rel="noreferrer">{jugadorB.foto.autor}</a> · {jugadorB.foto.licencia}</small>}</div>{jugadorB.imagen && <img src={jugadorB.imagen} alt="" />}</div>
         </div>
 
         <div className="h2h-table-wrap">

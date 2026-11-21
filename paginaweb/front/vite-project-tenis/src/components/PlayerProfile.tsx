@@ -5,8 +5,8 @@ export interface JugadorPerfil {
   pais: string;
   nacimiento: string;
   mano: string;
-  imagen: string;
-  foto: {
+  imagen?: string;
+  foto?: {
     autor: string;
     licencia: string;
     fuente: string;
@@ -48,6 +48,7 @@ export default function PlayerProfile({ jugador, onClose }: PlayerProfileProps) 
       <style>{`
         .perfil-overlay { position:fixed; z-index:20; inset:0; display:grid; place-items:center; padding:20px; background:rgba(10,28,19,.68); }
         .perfil-modal { position:relative; display:grid; width:min(100%,520px); grid-template-columns:minmax(150px,.8fr) 1.2fr; overflow:hidden; border-radius:14px; background:white; box-shadow:0 18px 56px #0004; }
+        .perfil-modal-sin-foto { grid-template-columns:1fr; }
         .perfil-modal-photo { display:flex; flex-direction:column; }
         .perfil-modal-image { width:100%; height:100%; min-height:250px; object-fit:contain; background:#e4ebe5; }
         .perfil-photo-credit { padding:7px 10px; color:#77817a; font-size:9px; text-align:center; }
@@ -70,14 +71,14 @@ export default function PlayerProfile({ jugador, onClose }: PlayerProfileProps) 
       <div className="perfil-overlay" onClick={(event) => {
         if (event.target === event.currentTarget) onClose();
       }}>
-        <section className="perfil-modal" role="dialog" aria-modal="true" aria-labelledby="perfil-nombre">
+        <section className={`perfil-modal${jugador.imagen ? '' : ' perfil-modal-sin-foto'}`} role="dialog" aria-modal="true" aria-labelledby="perfil-nombre">
           <button className="perfil-close" type="button" aria-label="Cerrar perfil" onClick={onClose}>×</button>
-          <div className="perfil-modal-photo">
-            <img className="perfil-modal-image" src={jugador.imagen} alt={jugador.nombre} />
-            <small className="perfil-photo-credit">
-              Foto: <a href={jugador.foto.fuente} target="_blank" rel="noreferrer">{jugador.foto.autor}</a> · {jugador.foto.licencia}
-            </small>
-          </div>
+        {jugador.imagen && <div className="perfil-modal-photo">
+          <img className="perfil-modal-image" src={jugador.imagen} alt={jugador.nombre} />
+          {jugador.foto && <small className="perfil-photo-credit">
+            Foto: <a href={jugador.foto.fuente} target="_blank" rel="noreferrer">{jugador.foto.autor}</a> · {jugador.foto.licencia}
+          </small>}
+        </div>}
           <div className="perfil-modal-info">
             <p className="perfil-kicker">PERFIL · {jugador.circuito} INDIVIDUALES</p>
             <h2 id="perfil-nombre">{jugador.nombre}</h2>
