@@ -1,5 +1,4 @@
 import type { GrandSlam } from '../types/GrandSlam';
-import { glosario } from '../data/glosario';
 
 const torneos = [
   {
@@ -119,15 +118,9 @@ export default function TournamentGuide() {
         .grand-slam-heading span { padding:4px 7px; border-radius:20px; background:#edf4ec; color:#174c38; font-size:9px; font-weight:750; }
         .grand-slam-details { color:#64806d; font-size:9px; font-weight:700; }
         .grand-slam-content p { margin:0; color:#68766d; font-size:11px; line-height:1.45; }
-        .glossary-section { margin-top:26px; }
-        .glossary-section h3 { margin:0 0 12px; color:#1f3227; font-size:18px; }
-        .glossary-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
-        .glossary-item { padding:12px 14px; border:1px solid #e5ebe4; border-radius:10px; background:#fff; }
-        .glossary-item strong { display:block; margin-bottom:5px; color:#174c38; font-size:12px; }
-        .glossary-item p { margin:0; color:#68766d; font-size:10px; line-height:1.45; }
         @media(max-width:900px) { .tournament-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
-        @media(max-width:900px) { .grand-slam-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } .glossary-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
-        @media(max-width:600px) { .tournament-guide { padding-top:40px; } .tournament-grid { grid-template-columns:1fr; } .grand-slam-grid { grid-template-columns:1fr; } .glossary-grid { grid-template-columns:1fr; } .tournament-card { padding:13px; } }
+        @media(max-width:900px) { .grand-slam-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+        @media(max-width:600px) { .tournament-guide { padding-top:40px; } .tournament-grid { grid-template-columns:1fr; } .grand-slam-grid { grid-template-columns:1fr; } .tournament-card { padding:13px; } }
       `}</style>
       <div className="section-heading">
         <div><p className="eyebrow">LOS GRAND SLAMS Y EL CIRCUITO</p><h2 id="torneos-titulo">Torneos del circuito</h2></div>
@@ -164,17 +157,6 @@ export default function TournamentGuide() {
           </article>
         ))}
       </div>
-      <section className="glossary-section" id="glosario" aria-labelledby="glosario-titulo">
-        <h3 id="glosario-titulo">Glosario de tenis</h3>
-        <div className="glossary-grid">
-          {glosario.map((termino) => (
-            <article className="glossary-item" key={termino.id}>
-              <strong>{termino.palabra}</strong>
-              <p>{termino.significado}</p>
-            </article>
-          ))}
-        </div>
-      </section>
     </section>
   );
 }

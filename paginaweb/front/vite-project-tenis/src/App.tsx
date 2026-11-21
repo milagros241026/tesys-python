@@ -4,6 +4,9 @@ import LoginForm from './login/LoginForm'
 import Curiosidades from './components/curiosidades'
 import TournamentGuide from './components/TournamentGuide'
 import InternationalCups from './components/InternationalCups'
+import ArgentinaTennis from './components/ArgentinaTennis'
+import RisingStars from './components/RisingStars'
+import Glossary from './components/Glossary'
 import Jugadores from './data/players_list'
 import { clearSession } from './services/api'
 import './App.css'
@@ -47,7 +50,7 @@ function App() {
           <a href="#inicio">Inicio</a>
           <a href="#curiosidades">Curiosidades</a>
           <a href="#torneos">Torneos</a>
-          <a href="#copas">Copas</a>
+          <a href="#argentina">Argentina</a>
           <a href="#glosario">Glosario</a>
           <a href="#jugadores">Jugadores</a>
         </nav>
@@ -92,6 +95,9 @@ function App() {
 
         <TournamentGuide />
         <InternationalCups />
+        <ArgentinaTennis />
+        <RisingStars />
+        <Glossary />
 
         <section id="jugadores" className="content-section players-section">
           <div className="section-heading">
