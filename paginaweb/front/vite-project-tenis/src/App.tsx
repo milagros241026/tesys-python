@@ -1,6 +1,4 @@
-import { useState } from 'react'
-import { LogOut, Trophy, Users, Sparkles } from 'lucide-react'
-import LoginForm from './login/LoginForm'
+import { Trophy, Users, Sparkles } from 'lucide-react'
 import Curiosidades from './components/curiosidades'
 import TournamentGuide from './components/TournamentGuide'
 import InternationalCups from './components/InternationalCups'
@@ -8,36 +6,10 @@ import ArgentinaTennis from './components/ArgentinaTennis'
 import RisingStars from './components/RisingStars'
 import Glossary from './components/Glossary'
 import Jugadores from './data/players_list'
-import { clearSession } from './services/api'
 import './App.css'
 
 function App() {
-  const [username, setUsername] = useState<string | null>(() =>
-    localStorage.getItem('username'),
-  )
-
-  const handleLoginSuccess = (loggedUsername: string) => setUsername(loggedUsername)
-
-  const handleLogout = () => {
-    clearSession()
-    setUsername(null)
-  }
-
-  if (!username) {
-    return (
-      <main className="login-page">
-        <div className="login-brand" aria-label="Tenis Club">
-          <span className="brand-mark"><Trophy size={22} /></span>
-          <span>Tenis<span className="brand-light">Club</span></span>
-        </div>
-        <div className="login-card">
-          <p className="eyebrow">TU ESPACIO DE TENIS</p>
-          <LoginForm onLoginSuccess={handleLoginSuccess} />
-        </div>
-        <p className="login-footnote">Una comunidad para quienes viven el tenis.</p>
-      </main>
-    )
-  }
+  const username = 'Invitado'
 
   return (
     <div className="dashboard">
@@ -57,9 +29,6 @@ function App() {
         <div className="profile-menu">
           <span className="avatar">{username.charAt(0).toUpperCase()}</span>
           <span className="profile-name">{username}</span>
-          <button className="logout-button" onClick={handleLogout} aria-label="Cerrar sesión" title="Cerrar sesión">
-            <LogOut size={18} />
-          </button>
         </div>
       </header>
 
