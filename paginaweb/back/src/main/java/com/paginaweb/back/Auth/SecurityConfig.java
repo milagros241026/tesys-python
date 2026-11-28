@@ -1,6 +1,6 @@
 package com.paginaweb.back.Auth;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -37,9 +37,13 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() { return new BCryptPasswordEncoder(); }
 
     @Bean
-    public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder) {
-        String username = System.getenv().getOrDefault("APP_USER", "admin");
-        String password = System.getenv().getOrDefault("APP_PASSWORD", "admin");
+    public UserDetailsService userDetailsService(
+            PasswordEncoder passwordEncoder,
+            @Value("${app.auth.username:}") String username,
+            @Value("${app.auth.password:}") String password) {
+        if (username.isBlank() || password.isBlank()) {
+            throw new IllegalStateException("APP_USER and APP_PASSWORD must be configured");
+        }
 
         return new InMemoryUserDetailsManager(
                 User.withUsername(username)

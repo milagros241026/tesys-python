@@ -17,6 +17,9 @@ public class JwtService {
     private final SecretKey key;
 
     public JwtService(@Value("${app.jwt.secret}") String encodedSecret) {
+        if (encodedSecret == null || encodedSecret.isBlank()) {
+            throw new IllegalStateException("JWT_SECRET must be configured");
+        }
         key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(encodedSecret));
     }
 

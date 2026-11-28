@@ -21,6 +21,7 @@ export default function LoginForm({ onLoginSuccess }: LoginFormProps) {
 
       localStorage.setItem('token', data.token)
       localStorage.setItem('username', data.username)
+      localStorage.setItem('expiresAt', String(Date.now() + data.expiresInMs))
 
       onLoginSuccess(data.username)
     } catch (error) {

@@ -84,7 +84,7 @@ a { color: inherit; }
 .players-section { padding-top: 70px; padding-bottom: 82px; }
 .players-section .jugadores { min-height: auto; padding: 8px 0 0; background: transparent; }
 .players-section .jugadores h2 { display: none; }
-.players-section .jugadores-buscador { max-width: 380px; margin: 0 auto 22px; border-color: #dce3dc; background: white; }
+.players-section .jugadores-buscador { max-width: none; margin: 0; border-color: #dce3dc; background: white; }
 .players-section .jugador-card { border: 1px solid #ebeee9; box-shadow: 0 5px 20px #203d240c; }
 .players-section .jugador-imagen { height: 235px; object-fit: contain; background: #e4ebe5; }
 .players-section .jugador-info h3 { margin-top: 0; font-size: 17px; }

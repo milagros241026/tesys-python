@@ -8,5 +8,7 @@ import com.paginaweb.back.models.Tournament;
 
     @Repository
     public interface TournamentRepository extends JpaRepository<Tournament, UUID>{
-    
+        boolean existsByName(String name);
+
+        java.util.Optional<Tournament> findByName(String name);
     } 

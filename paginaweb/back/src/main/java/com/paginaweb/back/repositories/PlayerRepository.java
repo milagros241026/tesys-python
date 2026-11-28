@@ -8,5 +8,7 @@ import com.paginaweb.back.models.Player;
 
 @Repository
 public interface PlayerRepository extends JpaRepository<Player, UUID>{
-  
+    boolean existsByName(String name);
+
+    java.util.Optional<Player> findByName(String name);
 } 

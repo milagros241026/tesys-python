@@ -32,7 +32,7 @@ El `docker-compose.yml` de esta carpeta define un Postgres local con estas crede
 |---|---|
 | DB | `tesys` |
 | Usuario | `tesys` |
-| Password | `tesys` |
+| Password | Configurala en `.env` con una clave segura |
 | Puerto | `5432` |
 
 ### Linux (Docker Engine, sin Docker Desktop)
@@ -113,7 +113,18 @@ Si necesitás apuntar a una base distinta (otro host, otra password, etc.), pod�
 
 - `DB_URL` (default: `jdbc:postgresql://localhost:5432/tesys`)
 - `DB_USER` (default: `tesys`)
-- `DB_PASSWORD` (default: `tesys`)
+- `DB_PASSWORD` (obligatoria; definila en `.env`)
+
+## Credenciales y secretos
+
+Copiá `.env.example` a `.env` y reemplazá los valores de ejemplo antes de iniciar la aplicación. `.env` está excluido de Git; no guardes credenciales reales en `.env.example` ni en archivos versionados.
+
+- `APP_USER` y `APP_PASSWORD` definen la única cuenta habilitada para iniciar sesión. La contraseña se codifica con BCrypt y el backend rechaza cualquier otra combinación.
+- `JWT_SECRET` debe ser una clave aleatoria codificada en Base64 de al menos 32 bytes. Podés generarla con `openssl rand -base64 32`.
+
+El backend no inicia si faltan las credenciales o la clave JWT, para evitar usar valores públicos por defecto.
+
+Al iniciar con una base vacía, el backend carga automáticamente jugadores, torneos y un partido de ejemplo. La carga es idempotente para no duplicar los datos existentes al reiniciar.
 
 ## Comandos útiles de Maven
 

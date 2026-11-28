@@ -1,11 +1,16 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { Star } from 'lucide-react';
 import PlayerProfile, { type JugadorPerfil } from '../components/PlayerProfile';
 import RankingFAQ from '../components/RankingFAQ';
+import { alternarFavorito, guardarFavoritos, leerFavoritos } from './favorites';
 import './jugadores.css';
 
 interface Jugador extends JugadorPerfil {
   id: number;
 }
+
+type FiltroCircuito = 'Todos' | 'ATP' | 'WTA';
+type OrdenJugadores = 'ranking' | 'edad' | 'nombre';
 
 const jugadores: Jugador[] = [
   {
@@ -100,6 +105,12 @@ function calcularEdad(fechaNacimiento: string): number {
 
 function Jugadores() {
   const [busqueda, setBusqueda] = useState('');
+  const [filtroCircuito, setFiltroCircuito] = useState<FiltroCircuito>('Todos');
+  const [ordenJugadores, setOrdenJugadores] = useState<OrdenJugadores>('ranking');
+  const [favoritos, setFavoritos] = useState<number[]>(() =>
+    leerFavoritos(localStorage, jugadores.map((jugador) => jugador.id))
+  );
+  const [soloFavoritos, setSoloFavoritos] = useState(false);
   const [perfilAbierto, setPerfilAbierto] = useState<Jugador | null>(null);
   const [jugadorAId, setJugadorAId] = useState(1);
   const [jugadorBId, setJugadorBId] = useState(2);
@@ -131,9 +142,33 @@ function Jugadores() {
   const victoriasA = enfrentamientos.filter((partido) => partido.ganador === jugadorA.nombre).length;
   const victoriasB = enfrentamientos.length - victoriasA;
 
-  const jugadoresFiltrados = jugadores.filter((jugador) =>
-    jugador.nombre.toLowerCase().includes(busqueda.toLowerCase())
-  );
+  useEffect(() => {
+    guardarFavoritos(localStorage, favoritos);
+  }, [favoritos]);
+
+  const toggleFavorito = (jugadorId: number) => {
+    setFavoritos((actuales) => alternarFavorito(actuales, jugadorId));
+  };
+
+  const jugadoresFiltrados = useMemo(() => {
+    const termino = busqueda.trim().toLocaleLowerCase('es');
+
+    return jugadores
+      .filter((jugador) =>
+        jugador.nombre.toLocaleLowerCase('es').includes(termino)
+        && (filtroCircuito === 'Todos' || jugador.circuito === filtroCircuito)
+        && (!soloFavoritos || favoritos.includes(jugador.id))
+      )
+      .sort((a, b) => {
+        const comparacion = ordenJugadores === 'ranking'
+          ? a.ranking - b.ranking
+          : ordenJugadores === 'edad'
+            ? Date.parse(b.nacimiento) - Date.parse(a.nacimiento)
+            : a.nombre.localeCompare(b.nombre, 'es');
+
+        return comparacion || a.nombre.localeCompare(b.nombre, 'es');
+      });
+  }, [busqueda, filtroCircuito, favoritos, ordenJugadores, soloFavoritos]);
 
   return (
     <section className="jugadores">
@@ -190,19 +225,70 @@ function Jugadores() {
       `}</style>
       <h2>🎾 Jugadores de tenis</h2>
 
-      <input
-        type="text"
-        placeholder="Buscar jugador..."
-        value={busqueda}
-        onChange={(e) => setBusqueda(e.target.value)}
-        className="jugadores-buscador"
-      />
+      <div className="jugadores-controles">
+        <label className="jugadores-control">
+          <span>Buscar jugador</span>
+          <input
+            type="text"
+            placeholder="Buscar por nombre..."
+            value={busqueda}
+            onChange={(event) => setBusqueda(event.target.value)}
+            className="jugadores-buscador"
+          />
+        </label>
+
+        <label className="jugadores-control">
+          <span>Circuito</span>
+          <select
+            aria-label="Filtrar por circuito"
+            value={filtroCircuito}
+            onChange={(event) => {
+              const value = event.currentTarget.value;
+              if (value === 'Todos' || value === 'ATP' || value === 'WTA') {
+                setFiltroCircuito(value);
+              }
+            }}
+          >
+            <option value="Todos">Todos</option>
+            <option value="ATP">ATP</option>
+            <option value="WTA">WTA</option>
+          </select>
+        </label>
+
+        <label className="jugadores-control">
+          <span>Ordenar por</span>
+          <select
+            aria-label="Ordenar jugadores por"
+            value={ordenJugadores}
+            onChange={(event) => {
+              const value = event.currentTarget.value;
+              if (value === 'ranking' || value === 'edad' || value === 'nombre') {
+                setOrdenJugadores(value);
+              }
+            }}
+          >
+            <option value="ranking">Ranking</option>
+            <option value="edad">Edad</option>
+            <option value="nombre">Nombre</option>
+          </select>
+        </label>
+      </div>
 
       <p style={{ margin: '0 0 14px', color: '#859087', fontSize: 11 }}>
         Rankings individuales ATP y WTA · actualización: 9 de noviembre de 2026
       </p>
+      <label className="jugadores-favoritos-toggle">
+        <input
+          type="checkbox"
+          checked={soloFavoritos}
+          onChange={(event) => setSoloFavoritos(event.target.checked)}
+        />
+        <span>Ver solo favoritos</span>
+      </label>
       <div className="jugadores-contenedor">
-        {jugadoresFiltrados.map((jugador) => (
+        {jugadoresFiltrados.length === 0 ? (
+          <p className="jugadores-vacio" role="status">No se encontraron jugadores</p>
+        ) : jugadoresFiltrados.map((jugador) => (
           <div className="jugador-card" key={jugador.id}>
 
             {jugador.imagen && <img
@@ -215,7 +301,19 @@ function Jugadores() {
             </small>}
 
             <div className="jugador-info">
-              <h3>{jugador.nombre}</h3>
+              <div className="jugador-titulo">
+                <h3>{jugador.nombre}</h3>
+                <button
+                  type="button"
+                  className={`favorito-button${favoritos.includes(jugador.id) ? ' favorito-button-activo' : ''}`}
+                  onClick={() => toggleFavorito(jugador.id)}
+                  aria-label={`${favoritos.includes(jugador.id) ? 'Quitar de favoritos' : 'Agregar a favoritos'}: ${jugador.nombre}`}
+                  aria-pressed={favoritos.includes(jugador.id)}
+                  title={favoritos.includes(jugador.id) ? 'Quitar de favoritos' : 'Agregar a favoritos'}
+                >
+                  <Star size={20} fill={favoritos.includes(jugador.id) ? 'currentColor' : 'none'} aria-hidden="true" />
+                </button>
+              </div>
               <p className="jugador-ranking">#{jugador.ranking} <small>{jugador.circuito} · Individuales</small></p>
 
               <p><strong>País:</strong> {jugador.pais}</p>
@@ -281,11 +379,6 @@ function Jugadores() {
 
       <PlayerProfile jugador={perfilAbierto} onClose={() => setPerfilAbierto(null)} />
 
-      {jugadoresFiltrados.length === 0 && (
-        <p className="jugadores-vacio">
-          No se encontraron jugadores.
-        </p>
-      )}
     </section>
   );
 }

@@ -1,4 +1,5 @@
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:8080/api'
+export const SESSION_CLEARED_EVENT = 'tesys:session-cleared'
 
 export interface LoginResponse {
   token: string
@@ -40,4 +41,6 @@ export async function authFetch(path: string, options: RequestInit = {}): Promis
 export function clearSession(): void {
   localStorage.removeItem('token')
   localStorage.removeItem('username')
+  localStorage.removeItem('expiresAt')
+  window.dispatchEvent(new Event(SESSION_CLEARED_EVENT))
 }

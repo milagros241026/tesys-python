@@ -1,103 +1,36 @@
-import { useState } from 'react';
-
-import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-
 import { reglas } from '../data/rules';
 
 export default function Reglas() {
-  const [reglaAbierta, setReglaAbierta] = useState<number | null>(null);
-
-  const mostrarRegla = (id: number) => {
-    setReglaAbierta(reglaAbierta === id ? null : id);
-  };
-
   return (
-    <Box sx={{ padding: 4 }}>
-
-      <Typography
-        variant="h4"
-        sx={{
-          textAlign: 'center',
-          marginBottom: 4,
-          color: 'text.primary',
-          fontWeight: 'bold'
-        }}
-      >
-        🎾 Reglas del tenis
-      </Typography>
-
-      <Box
-        sx={{
-          display: 'grid',
-          gridTemplateColumns: {
-            xs: '1fr',
-            sm: 'repeat(2, 1fr)',
-            md: 'repeat(3, 1fr)'
-          },
-          gap: 3
-        }}
-      >
-
+    <section className="content-section rules-section" id="reglas" aria-labelledby="reglas-titulo">
+      <style>{`
+        .rules-section { padding-top:56px; padding-bottom:18px; }
+        .rules-intro { margin:-5px 0 18px; color:#77817a; font-size:12px; line-height:1.55; }
+        .rules-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
+        .rules-card { align-self:start; overflow:hidden; border:1px solid #e5ebe4; border-radius:12px; background:#fff; box-shadow:0 5px 18px #203d240a; }
+        .rules-card summary { display:flex; min-height:54px; align-items:center; justify-content:space-between; gap:12px; padding:15px 17px; color:#1f3227; font-size:14px; font-weight:700; cursor:pointer; list-style:none; }
+        .rules-card summary::-webkit-details-marker { display:none; }
+        .rules-card summary::after { color:#4b8a68; content:"+"; font-size:20px; font-weight:500; line-height:1; }
+        .rules-card[open] summary { color:#174c38; }
+        .rules-card[open] summary::after { content:"-"; }
+        .rules-card summary:focus-visible { outline:2px solid #4b8a68; outline-offset:-3px; }
+        .rules-description { margin:0; padding:0 17px 17px; color:#68766d; font-size:12px; line-height:1.65; }
+        @media(max-width:900px) { .rules-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+        @media(max-width:600px) { .rules-grid { grid-template-columns:1fr; } }
+      `}</style>
+      <div className="section-heading">
+        <div><p className="eyebrow">APRENDE A JUGAR</p><h2 id="reglas-titulo">Reglas básicas del tenis</h2></div>
+        <span className="section-number">EL JUEGO</span>
+      </div>
+      <p className="rules-intro">Una guía rápida para entender cómo se cuentan los puntos y qué hace falta para ganar.</p>
+      <div className="rules-grid">
         {reglas.map((regla) => (
-          <Card
-            key={regla.id}
-            sx={{
-              borderRadius: 3,
-              boxShadow: 3,
-              transition: '0.3s',
-
-              '&:hover': {
-                transform: 'translateY(-5px)',
-                boxShadow: 6
-              }
-            }}
-          >
-
-            <CardContent>
-
-              <Typography
-                variant="h6"
-                sx={{
-                  fontWeight: 'bold',
-                  color: 'text.primary',
-                  marginBottom: 2
-                }}
-              >
-                {regla.titulo}
-              </Typography>
-
-              {reglaAbierta === regla.id && (
-                <Typography
-                  variant="body2"
-                  sx={{ marginBottom: 2 }}
-                >
-                  {regla.descripcion}
-                </Typography>
-              )}
-
-              <Button
-                variant="contained"
-                onClick={() => mostrarRegla(regla.id)}
-                sx={{
-                  backgroundColor: '#2d6a4f',
-                  '&:hover': {
-                    backgroundColor: '#1b4332'
-                  }
-                }}
-              >
-                {reglaAbierta === regla.id ? 'Ver menos' : 'Ver más'}
-              </Button>
-
-            </CardContent>
-
-          </Card>
+          <details className="rules-card" key={regla.id}>
+            <summary>{regla.titulo}</summary>
+            <p className="rules-description">{regla.descripcion}</p>
+          </details>
         ))}
-
-      </Box>
-    </Box>
+      </div>
+    </section>
   );
 }

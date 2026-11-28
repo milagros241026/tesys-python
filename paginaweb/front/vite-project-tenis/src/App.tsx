@@ -1,5 +1,6 @@
-import { Trophy, Users, Sparkles } from 'lucide-react'
+import { LogOut, Trophy, Users, Sparkles } from 'lucide-react'
 import Curiosidades from './components/curiosidades'
+import Reglas from './components/rules'
 import TournamentGuide from './components/TournamentGuide'
 import InternationalCups from './components/InternationalCups'
 import ArgentinaTennis from './components/ArgentinaTennis'
@@ -7,17 +8,60 @@ import RisingStars from './components/RisingStars'
 import Glossary from './components/Glossary'
 import Jugadores from './data/players_list'
 import LoginForm from './login/LoginForm'
-import { isLoggedIn } from './login/AuthFetch'
-import { useState } from 'react'
+import { clearSession, isLoggedIn, SESSION_CLEARED_EVENT } from './login/AuthFetch'
+import { useEffect, useState } from 'react'
 import './App.css'
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(isLoggedIn)
   const [username, setUsername] = useState(localStorage.getItem('username') ?? 'Invitado')
 
+  useEffect(() => {
+    const handleSessionCleared = () => {
+      setUsername('Invitado')
+      setLoggedIn(false)
+    }
+
+    const handleStorageChange = (event: StorageEvent) => {
+      if (event.key === 'token' && event.newValue === null) {
+        handleSessionCleared()
+      }
+    }
+
+    window.addEventListener(SESSION_CLEARED_EVENT, handleSessionCleared)
+    window.addEventListener('storage', handleStorageChange)
+
+    if (loggedIn) {
+      const expiresAt = Number(localStorage.getItem('expiresAt'))
+      const remainingTime = expiresAt - Date.now()
+
+      if (!Number.isFinite(expiresAt) || remainingTime <= 0) {
+        clearSession()
+      } else {
+        const timeoutId = window.setTimeout(clearSession, remainingTime)
+        return () => {
+          window.clearTimeout(timeoutId)
+          window.removeEventListener(SESSION_CLEARED_EVENT, handleSessionCleared)
+          window.removeEventListener('storage', handleStorageChange)
+        }
+      }
+    } else if (localStorage.getItem('token') !== null) {
+      clearSession()
+    }
+
+    return () => {
+      window.removeEventListener(SESSION_CLEARED_EVENT, handleSessionCleared)
+      window.removeEventListener('storage', handleStorageChange)
+    }
+  }, [loggedIn])
+
   const handleLoginSuccess = (loggedUsername: string) => {
     setUsername(loggedUsername)
     setLoggedIn(true)
+  }
+
+  const handleLogout = () => {
+    clearSession()
   }
 
   if (!loggedIn) {
@@ -39,6 +83,7 @@ function App() {
         </a>
         <nav className="main-nav" aria-label="Navegación principal">
           <a href="#inicio">Inicio</a>
+          <a href="#reglas">Reglas</a>
           <a href="#curiosidades">Curiosidades</a>
           <a href="#torneos">Torneos</a>
           <a href="#argentina">Argentina</a>
@@ -47,6 +92,15 @@ function App() {
         </nav>
         <div className="profile-menu">
           <span className="avatar">{username.charAt(0).toUpperCase()}</span>
+          <button
+            type="button"
+            className="logout-button"
+            onClick={handleLogout}
+            aria-label="Cerrar sesión"
+            title="Cerrar sesión"
+          >
+            <LogOut size={17} aria-hidden="true" />
+          </button>
         </div>
       </header>
 
@@ -71,6 +125,8 @@ function App() {
           <div><span className="intro-icon"><Users size={18} /></span><div><strong>Grandes figuras</strong><p>Conocé a tus jugadores favoritos</p></div></div>
           <div><span className="intro-icon"><Trophy size={18} /></span><div><strong>Pasión por el juego</strong><p>Todo el mundo del tenis, en un lugar</p></div></div>
         </section>
+
+        <Reglas />
 
         <section id="curiosidades" className="content-section curiosity-section">
           <div className="section-heading">

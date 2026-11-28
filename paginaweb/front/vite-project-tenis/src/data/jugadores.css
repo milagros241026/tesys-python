@@ -11,15 +11,34 @@
   margin-bottom: 25px;
 }
 
-.jugadores-buscador {
-  display: block;
+.jugadores-controles {
+  display: grid;
+  grid-template-columns: minmax(200px, 1fr) repeat(2, minmax(150px, 0.55fr));
+  align-items: end;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.jugadores-control {
+  display: grid;
+  gap: 6px;
+  color: #657168;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.jugadores-buscador,
+.jugadores-control select {
   width: 100%;
-  max-width: 400px;
-  margin: 0 auto 30px;
-  padding: 12px;
-  border: 1px solid #ccc;
+  min-height: 44px;
+  margin: 0;
+  padding: 0 12px;
+  border: 1px solid #dce5dc;
   border-radius: 8px;
-  font-size: 16px;
+  background: #fbfcfa;
+  color: #203b2c;
+  font: inherit;
+  font-size: 13px;
 }
 
 .jugadores-contenedor {
@@ -62,9 +81,67 @@
 }
 
 .jugadores-vacio {
+  grid-column: 1 / -1;
   text-align: center;
-  margin-top: 30px;
-  color: #666;
+  margin: 0;
+  padding: 24px;
+  border: 1px solid #e5ebe4;
+  border-radius: 12px;
+  background: #fff;
+  color: #68766d;
+}
+
+.jugadores-favoritos-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 14px;
+  color: #46534a;
+  font-size: 12px;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.jugadores-favoritos-toggle input {
+  width: 16px;
+  height: 16px;
+  accent-color: #174c38;
+}
+
+.jugador-titulo {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.jugador-titulo h3 {
+  min-width: 0;
+  margin: 0 0 15px;
+}
+
+.favorito-button {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  flex: 0 0 auto;
+  place-items: center;
+  margin: -7px -8px 0 0;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #77817a;
+  cursor: pointer;
+}
+
+.favorito-button:hover,
+.favorito-button-activo {
+  color: #b68b24;
+}
+
+.favorito-button:focus-visible {
+  outline: 2px solid #4b8a68;
+  outline-offset: 1px;
 }
 
 @media (max-width: 900px) {
@@ -76,6 +153,10 @@
 @media (max-width: 600px) {
   .jugadores {
     padding: 20px;
+  }
+
+  .jugadores-controles {
+    grid-template-columns: 1fr;
   }
 
   .jugadores-contenedor {
