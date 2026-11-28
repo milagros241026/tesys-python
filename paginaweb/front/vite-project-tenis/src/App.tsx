@@ -6,10 +6,29 @@ import ArgentinaTennis from './components/ArgentinaTennis'
 import RisingStars from './components/RisingStars'
 import Glossary from './components/Glossary'
 import Jugadores from './data/players_list'
+import LoginForm from './login/LoginForm'
+import { isLoggedIn } from './login/AuthFetch'
+import { useState } from 'react'
 import './App.css'
 
 function App() {
-  const username = 'Invitado'
+  const [loggedIn, setLoggedIn] = useState(isLoggedIn)
+  const [username, setUsername] = useState(localStorage.getItem('username') ?? 'Invitado')
+
+  const handleLoginSuccess = (loggedUsername: string) => {
+    setUsername(loggedUsername)
+    setLoggedIn(true)
+  }
+
+  if (!loggedIn) {
+    return (
+      <main className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
+        <section className="w-full max-w-sm rounded-2xl bg-white p-6 shadow-lg">
+          <LoginForm onLoginSuccess={handleLoginSuccess} />
+        </section>
+      </main>
+    )
+  }
 
   return (
     <div className="dashboard">
@@ -28,7 +47,6 @@ function App() {
         </nav>
         <div className="profile-menu">
           <span className="avatar">{username.charAt(0).toUpperCase()}</span>
-          <span className="profile-name">{username}</span>
         </div>
       </header>
 
